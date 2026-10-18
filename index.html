@@ -1,154 +1,817 @@
+```html
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KiN — Timeless Beauty & Skin Alchemy</title>
+    <title>KiN Skincare — Kecantikan Alami, Pancaran Keanggunan Modern</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js CDN -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         kin: {
-                            bg: '#FAF7F5',
-                            card: '#FFFFFF',
-                            primary: '#8C6D58',
-                            dark: '#2C221E',
-                            accent: '#D4A373',
-                            soft: '#F3E9E2',
-                            gold: '#C5A059'
+                            cream: '#FAF6F0',
+                            sand: '#F3EBE1',
+                            nude: '#E8D8C8',
+                            champagne: '#D8C3A5',
+                            gold: '#C5A059',
+                            rose: '#D4A373',
+                            espresso: '#2B2118',
+                            bronze: '#4A3B32',
+                            softgray: '#8C827A'
                         }
                     },
                     fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
                     }
                 }
             }
         }
     </script>
+
     <style>
-        [x-cloak] { display: none !important; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #FAF7F5; }
-        ::-webkit-scrollbar-thumb { background: #D4A373; border-radius: 4px; }
+        body {
+            background-color: #FAF6F0;
+            color: #2B2118;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Subtle luxury glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(216, 195, 165, 0.3);
+        }
+
+        .glass-nav {
+            background: rgba(250, 246, 240, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(216, 195, 165, 0.25);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #2B2118 0%, #C5A059 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-btn {
+            background: linear-gradient(135deg, #2B2118 0%, #4A3B32 100%);
+            color: #FAF6F0;
+            transition: all 0.3s ease;
+        }
+
+        .gold-btn:hover {
+            background: linear-gradient(135deg, #C5A059 0%, #B08B45 100%);
+            box-shadow: 0 10px 25px -5px rgba(197, 160, 89, 0.4);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D8C3A5;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C5A059;
+        }
     </style>
 </head>
-<body class="bg-kin-bg text-kin-dark font-sans antialiased selection:bg-kin-accent selection:text-white relative" 
-      x-data="kinStore()">
+<body class="relative">
 
-    <!-- Header Navigation -->
-    <nav class="sticky top-0 z-30 bg-kin-bg/90 backdrop-blur-md border-b border-kin-soft/80">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-3xl font-serif font-bold tracking-widest text-kin-dark">KiN<span class="text-kin-accent">.</span></a>
+    <!-- ================= HEADER / NAVIGATION ================= -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             
-            <div class="hidden md:flex items-center space-x-8 text-sm tracking-wide font-medium">
-                <a href="#unggulan" class="hover:text-kin-accent transition-colors">Produk Laris</a>
-                <a href="#koleksi" class="hover:text-kin-accent transition-colors">Koleksi Lengkap</a>
-                <a href="#kontak" class="hover:text-kin-accent transition-colors">Kontak</a>
-            </div>
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="lg:hidden text-kin-espresso text-xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
 
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2">
+                <span class="font-serif text-3xl font-light tracking-[0.25em] text-kin-espresso uppercase">kin</span>
+                <span class="text-[10px] uppercase tracking-[0.3em] text-kin-gold font-semibold self-end mb-1">skin</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wider uppercase text-kin-bronze">
+                <a href="#beranda" class="hover:text-kin-gold transition-colors">Beranda</a>
+                <a href="#produk" class="hover:text-kin-gold transition-colors">Koleksi Produk</a>
+                <a href="#tentang" class="hover:text-kin-gold transition-colors">Tentang KIN</a>
+                <a href="#keunggulan" class="hover:text-kin-gold transition-colors">Keunggulan</a>
+                <a href="#testimoni" class="hover:text-kin-gold transition-colors">Testimoni</a>
+            </nav>
+
+            <!-- User Action Icons -->
             <div class="flex items-center space-x-5">
-                <!-- Tombol Login Member -->
-                <button @click="isLoginOpen = true" class="text-sm font-medium hover:text-kin-accent transition-colors flex items-center gap-2 bg-kin-soft/50 px-4 py-2 rounded-full border border-kin-soft">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    <span>Member KiN</span>
+                <!-- Login Button -->
+                <button onclick="openLoginModal()" class="flex items-center space-x-2 text-sm text-kin-espresso hover:text-kin-gold transition-colors font-medium">
+                    <i class="fa-regular fa-user text-lg"></i>
+                    <span class="hidden sm:inline">Member Login</span>
                 </button>
 
-                <!-- Tombol Keranjang Belanja -->
-                <button @click="isCartOpen = true" class="relative p-2.5 bg-kin-dark text-white rounded-full hover:bg-kin-primary transition-colors shadow-sm">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                    <span x-show="totalCartCount > 0" x-text="totalCartCount" class="absolute -top-1 -right-1 bg-kin-accent text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-white"></span>
+                <!-- Cart Button -->
+                <button onclick="toggleCartDrawer()" class="relative text-kin-espresso hover:text-kin-gold transition-colors p-1">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-counter" class="absolute -top-1 -right-2 bg-kin-gold text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
                 </button>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
-        <div>
-            <span class="text-xs uppercase tracking-[0.3em] font-semibold text-kin-accent block mb-4">Kemewahan Alami Alkimia Kulit</span>
-            <h1 class="text-4xl md:text-6xl font-serif font-normal leading-tight mb-6">Pancarkan Pesona Kulit Abadi bersama <span class="italic font-serif text-kin-accent">KiN</span>.</h1>
-            <p class="text-kin-dark/70 font-light mb-8 max-w-md leading-relaxed text-sm md:text-base">Formulasi dermatologi kelas dunia dipadukan dengan ekstrak botanical langka untuk menghidrasi, mencerahkan, serta meremajakan kulit Anda secara alami.</p>
-            <div class="flex items-center gap-4">
-                <a href="#unggulan" class="bg-kin-dark text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-kin-primary transition-all duration-300 shadow-lg hover:shadow-xl inline-block">Lihat Produk Laris</a>
-                <a href="#koleksi" class="border border-kin-dark/20 text-kin-dark px-6 py-4 rounded-full text-sm font-medium hover:bg-kin-soft transition-all inline-block">Semua Produk</a>
-            </div>
+        <!-- Mobile Nav Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-kin-cream border-b border-kin-nude px-6 py-4 flex flex-col space-y-3 text-sm font-medium uppercase tracking-wider text-kin-espresso">
+            <a href="#beranda" onclick="toggleMobileMenu()" class="hover:text-kin-gold py-1">Beranda</a>
+            <a href="#produk" onclick="toggleMobileMenu()" class="hover:text-kin-gold py-1">Koleksi Produk</a>
+            <a href="#tentang" onclick="toggleMobileMenu()" class="hover:text-kin-gold py-1">Tentang KIN</a>
+            <a href="#keunggulan" onclick="toggleMobileMenu()" class="hover:text-kin-gold py-1">Keunggulan</a>
+            <a href="#testimoni" onclick="toggleMobileMenu()" class="hover:text-kin-gold py-1">Testimoni</a>
         </div>
-        <div class="relative">
-            <div class="w-full h-[420px] md:h-[480px] bg-kin-soft rounded-3xl overflow-hidden shadow-2xl relative">
-                <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1000&q=80" alt="KiN Beauty Collection" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                <div class="absolute bottom-6 left-6 right-6 p-6 bg-white/80 backdrop-blur-md rounded-2xl border border-white/50 text-xs">
-                    <p class="font-serif text-base font-semibold text-kin-dark mb-1">Dermatologically Tested</p>
-                    <p class="text-kin-dark/70">Formula bebas paraben, cruelty-free, dan cocok untuk semua jenis kulit sensitif.</p>
+    </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="beranda" class="pt-32 pb-20 md:pt-40 md:pb-28 px-6 min-h-[90vh] flex items-center justify-center relative overflow-hidden">
+        <!-- Background Ambient Accents -->
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-kin-nude/40 rounded-full filter blur-3xl -z-10"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-kin-champagne/30 rounded-full filter blur-3xl -z-10"></div>
+
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-kin-sand/80 border border-kin-champagne text-xs uppercase tracking-[0.2em] text-kin-gold font-medium">
+                    <i class="fa-solid fa-sparkles text-[10px]"></i> Formula Dermaceutical Botani
+                </div>
+                
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-light text-kin-espresso leading-tight">
+                    Kecantikan Alami, <br>
+                    <span class="italic font-normal gold-gradient-text">Pancaran Keanggunan</span> Modern.
+                </h1>
+
+                <p class="text-kin-bronze text-base sm:text-lg font-light leading-relaxed max-w-xl mx-auto md:mx-0">
+                    Menghadirkan perawatan kulit mewah berstandar dermatologi. Diformulasikan khusus untuk merawat, mencerahkan, dan mengembalikan kilau alami kulit Anda tanpa rasa berat.
+                </p>
+
+                <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#produk" class="gold-btn px-8 py-4 rounded-full text-sm uppercase tracking-widest font-medium text-center">
+                        Jelajahi Koleksi
+                    </a>
+                    <button onclick="openLoginModal()" class="border border-kin-espresso/30 text-kin-espresso hover:border-kin-gold hover:text-kin-gold px-8 py-4 rounded-full text-sm uppercase tracking-widest font-medium transition-colors text-center">
+                        Gabung KIN Club
+                    </button>
+                </div>
+
+                <!-- Subtle Trust Badge -->
+                <div class="pt-8 border-t border-kin-champagne/40 flex items-center justify-center md:justify-start space-x-6 text-xs text-kin-softgray uppercase tracking-widest">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-kin-gold"></i> BPOM Verified</span>
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-leaf text-kin-gold"></i> 100% Halal & Cruelty Free</span>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- 1. Produk Unggulan (Laris) dengan Gambar -->
-    <section id="unggulan" class="max-w-7xl mx-auto px-6 py-16 border-t border-kin-soft">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div>
-                <span class="text-xs uppercase tracking-widest text-kin-accent font-semibold block mb-2">Most Loved</span>
-                <h2 class="text-3xl md:text-4xl font-serif font-normal">Produk Laris KiN</h2>
-            </div>
-            <p class="text-kin-dark/60 text-xs md:text-sm max-w-md mt-2 md:mt-0">Pilihan favorit para pengguna untuk hasil kulit sehat bercahaya secara maksimal.</p>
-        </div>
+            <!-- Hero Image Banner -->
+            <div class="relative flex justify-center">
+                <div class="relative w-full max-w-md aspect-[4/5] rounded-t-full rounded-b-3xl overflow-hidden shadow-2xl border-4 border-white/60">
+                    <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=800" alt="KIN Skincare Line" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kin-espresso/40 via-transparent to-transparent"></div>
+                </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <template x-for="product in bestSellers" :key="product.id">
-                <div class="bg-kin-card p-6 rounded-2xl shadow-sm border border-kin-soft/80 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                    <div>
-                        <div class="h-64 rounded-xl overflow-hidden mb-5 bg-kin-bg relative">
-                            <img :src="product.image" :alt="product.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-kin-dark text-[10px] font-bold px-3 py-1 rounded-full tracking-wider uppercase shadow-sm" x-text="product.badge"></span>
+                <!-- Floating Glass Card -->
+                <div class="absolute -bottom-6 -left-2 sm:left-4 glass-panel p-4 sm:p-5 rounded-2xl max-w-[220px] shadow-lg hidden sm:block">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-kin-champagne/40 flex items-center justify-center text-kin-gold">
+                            <i class="fa-solid fa-award text-lg"></i>
                         </div>
-                        <h3 class="font-serif text-xl font-medium mb-1" x-text="product.name"></h3>
-                        <p class="text-xs text-kin-dark/60 mb-4 line-clamp-2" x-text="product.shortDesc"></p>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-kin-soft">
                         <div>
-                            <span class="text-xs text-gray-400 block">Harga</span>
-                            <span class="font-semibold text-lg text-kin-dark" x-text="formatRupiah(product.price)"></span>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-kin-espresso">Laris di 2026</p>
+                            <p class="text-[11px] text-kin-softgray">4.9/5 Rata-rata Rating</p>
                         </div>
-                        <button @click="addToCart(product)" class="bg-kin-dark text-white px-5 py-2.5 rounded-full text-xs font-medium hover:bg-kin-accent transition-colors flex items-center gap-1.5 shadow-sm">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                            <span>Tambah</span>
-                        </button>
                     </div>
                 </div>
-            </template>
+            </div>
         </div>
     </section>
 
-    <!-- 2. 10 Produk Tambahan Non-Gambar (Daftar & Pop-up Spek) -->
-    <section id="koleksi" class="max-w-7xl mx-auto px-6 py-16 border-t border-kin-soft">
-        <div class="text-center max-w-2xl mx-auto mb-14">
-            <span class="text-xs uppercase tracking-widest text-kin-accent font-semibold block mb-2">Complete Range</span>
-            <h2 class="text-3xl md:text-4xl font-serif font-normal mb-3">Koleksi Perawatan KiN</h2>
-            <p class="text-kin-dark/60 text-xs md:text-sm">Rangkaian perawatan kulit harian eksklusif. Klik tombol detail untuk melihat spesifikasi dan kandungan aktif tiap produk.</p>
+
+    <!-- ================= BEST SELLERS SHOWCASE ================= -->
+    <section id="produk" class="py-20 px-6 bg-kin-sand/50">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <span class="text-xs uppercase tracking-[0.3em] text-kin-gold font-semibold">Best Sellers Showcase</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-light text-kin-espresso">Koleksi Produk Unggulan KIN</h2>
+                <div class="w-12 h-[1px] bg-kin-gold mx-auto my-2"></div>
+                <p class="text-kin-softgray text-sm sm:text-base font-light">
+                    Sensasi kemewahan perawatan wajah harian dengan hasil nyata yang bersahabat untuk semua jenis kulit.
+                </p>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Product 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden bg-kin-sand aspect-square">
+                            <span class="absolute top-3 left-3 z-10 bg-kin-espresso text-kin-cream text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full">Best Seller</span>
+                            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=600" alt="Kin Radiant Glow Serum" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-1 text-kin-gold text-xs mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-kin-softgray text-[11px] ml-1">(128 Ulasan)</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-medium text-kin-espresso mb-1">Kin Radiant Glow Serum</h3>
+                            <p class="text-xs text-kin-softgray mb-4 font-light leading-relaxed">Konsentrat Vitamin C & Niacinamide murni untuk mencerahkan dan menyamarkan noda hitam.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-kin-champagne/20 mt-2">
+                        <div>
+                            <span class="text-xs text-kin-softgray block line-through">Rp 320.000</span>
+                            <span class="text-base font-semibold text-kin-espresso">Rp 265.000</span>
+                        </div>
+                        <button onclick="addToCart('Kin Radiant Glow Serum', 265000, 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=200')" class="w-10 h-10 rounded-full bg-kin-espresso text-kin-cream hover:bg-kin-gold transition-colors flex items-center justify-center">
+                            <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden bg-kin-sand aspect-square">
+                            <span class="absolute top-3 left-3 z-10 bg-kin-gold text-white text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full">Favorit</span>
+                            <img src="https://images.unsplash.com/photo-1608248597261-83325803d36b?auto=format&fit=crop&q=80&w=600" alt="Kin Velvet Hydrating Essence" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-1 text-kin-gold text-xs mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-kin-softgray text-[11px] ml-1">(96 Ulasan)</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-medium text-kin-espresso mb-1">Kin Velvet Essence</h3>
+                            <p class="text-xs text-kin-softgray mb-4 font-light leading-relaxed">Esensi kelembapan mendalam dengan Hyaluronic Acid ganda untuk kulit kenyal bertekstur beludru.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-kin-champagne/20 mt-2">
+                        <div>
+                            <span class="text-xs text-kin-softgray block line-through">Rp 280.000</span>
+                            <span class="text-base font-semibold text-kin-espresso">Rp 225.000</span>
+                        </div>
+                        <button onclick="addToCart('Kin Velvet Essence', 225000, 'https://images.unsplash.com/photo-1608248597261-83325803d36b?auto=format&fit=crop&q=80&w=200')" class="w-10 h-10 rounded-full bg-kin-espresso text-kin-cream hover:bg-kin-gold transition-colors flex items-center justify-center">
+                            <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden bg-kin-sand aspect-square">
+                            <span class="absolute top-3 left-3 z-10 bg-kin-espresso text-kin-cream text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full">Terlaris</span>
+                            <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=600" alt="Kin Botanical Youth Cream" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-1 text-kin-gold text-xs mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                                <span class="text-kin-softgray text-[11px] ml-1">(210 Ulasan)</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-medium text-kin-espresso mb-1">Kin Botanical Youth Cream</h3>
+                            <p class="text-xs text-kin-softgray mb-4 font-light leading-relaxed">Krim anti-aging alami ekstrak bunga Bakuchiol & Peptide untuk mengencangkan dan meremajakan.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-kin-champagne/20 mt-2">
+                        <div>
+                            <span class="text-xs text-kin-softgray block line-through">Rp 390.000</span>
+                            <span class="text-base font-semibold text-kin-espresso">Rp 315.000</span>
+                        </div>
+                        <button onclick="addToCart('Kin Botanical Youth Cream', 315000, 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=200')" class="w-10 h-10 rounded-full bg-kin-espresso text-kin-cream hover:bg-kin-gold transition-colors flex items-center justify-center">
+                            <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden bg-kin-sand aspect-square">
+                            <span class="absolute top-3 left-3 z-10 bg-kin-rose text-white text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full">Baru</span>
+                            <img src="https://images.unsplash.com/photo-1567928256055-2c5838ea40ab?auto=format&fit=crop&q=80&w=600" alt="Kin Luxe Sun Barrier SPF 50+" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-1 text-kin-gold text-xs mb-2">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-kin-softgray text-[11px] ml-1">(84 Ulasan)</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-medium text-kin-espresso mb-1">Kin Luxe Sun Barrier</h3>
+                            <p class="text-xs text-kin-softgray mb-4 font-light leading-relaxed">Sunscreen SPF 50+ PA++++ ultra ringan tanpa whitecast, melindungi sekaligus menutrisi.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-kin-champagne/20 mt-2">
+                        <div>
+                            <span class="text-xs text-kin-softgray block line-through">Rp 210.000</span>
+                            <span class="text-base font-semibold text-kin-espresso">Rp 175.000</span>
+                        </div>
+                        <button onclick="addToCart('Kin Luxe Sun Barrier', 175000, 'https://images.unsplash.com/photo-1567928256055-2c5838ea40ab?auto=format&fit=crop&q=80&w=200')" class="w-10 h-10 rounded-full bg-kin-espresso text-kin-cream hover:bg-kin-gold transition-colors flex items-center justify-center">
+                            <i class="fa-solid fa-plus text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= WHY KIN / KEUNGGULAN ================= -->
+    <section id="keunggulan" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.3em] text-kin-gold font-semibold">Filosofi Kami</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-light text-kin-espresso mt-2">Mengapa Memilih KIN?</h2>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center p-6 space-y-3">
+                    <div class="w-16 h-16 rounded-full bg-kin-nude/50 text-kin-gold flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-flask"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-medium text-kin-espresso">Formula Dermatologis</h4>
+                    <p class="text-xs text-kin-softgray font-light leading-relaxed">Dirancang bersama ahli kulit terkemuka untuk efektivitas tinggi dan keamanan optimal.</p>
+                </div>
+
+                <div class="text-center p-6 space-y-3">
+                    <div class="w-16 h-16 rounded-full bg-kin-nude/50 text-kin-gold flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-medium text-kin-espresso">Bahan Botani Murni</h4>
+                    <p class="text-xs text-kin-softgray font-light leading-relaxed">Mengkombinasikan ekstrak tanaman organik pilihan tanpa paraben atau bahan kimia keras.</p>
+                </div>
+
+                <div class="text-center p-6 space-y-3">
+                    <div class="w-16 h-16 rounded-full bg-kin-nude/50 text-kin-gold flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-medium text-kin-espresso">Halal & Cruelty-Free</h4>
+                    <p class="text-xs text-kin-softgray font-light leading-relaxed">100% ramah lingkungan, tidak diuji pada hewan, dan tersertifikasi Halal resmi.</p>
+                </div>
+
+                <div class="text-center p-6 space-y-3">
+                    <div class="w-16 h-16 rounded-full bg-kin-nude/50 text-kin-gold flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-medium text-kin-espresso">Ramah Kulit Sensitif</h4>
+                    <p class="text-xs text-kin-softgray font-light leading-relaxed">Tekstur lembut yang menyerap cepat, cocok untuk iklim tropis dan semua jenis kulit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= MEMBER BANNER SECTION ================= -->
+    <section class="py-16 px-6 bg-gradient-to-r from-kin-espresso to-kin-bronze text-kin-cream relative overflow-hidden my-10">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div class="space-y-3 text-center md:text-left">
+                <span class="text-xs uppercase tracking-[0.3em] text-kin-gold font-medium">Privilege Eksklusif</span>
+                <h3 class="font-serif text-3xl sm:text-4xl font-light">Bergabunglah dengan KIN Club</h3>
+                <p class="text-sm text-kin-nude/80 max-w-lg font-light">
+                    Nikmati diskon member 15%, poin reward setiap pembelian, hadiah ulang tahun istimewa, dan akses awal ke produk terbatas.
+                </p>
+            </div>
+            <button onclick="openLoginModal(true)" class="bg-kin-gold hover:bg-yellow-600 text-white px-8 py-4 rounded-full text-sm uppercase tracking-widest font-semibold transition-all shadow-lg whitespace-nowrap">
+                Daftar Member Gratis
+            </button>
+        </div>
+    </section>
+
+
+    <!-- ================= TESTIMONI ================= -->
+    <section id="testimoni" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase tracking-[0.3em] text-kin-gold font-semibold">Kata Mereka</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-light text-kin-espresso">Pengalaman Menggunakan KIN</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testi 1 -->
+                <div class="glass-panel p-8 rounded-2xl space-y-4">
+                    <div class="text-kin-gold text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sm text-kin-bronze font-light italic leading-relaxed">
+                        "Kin Radiant Glow Serum benar-benar mengubah tekstur kulitku! Dalam 2 minggu pemakaian, flek hitam bekas jerawat pudar dan wajah kelihatan bersinar alami."
+                    </p>
+                    <div class="pt-4 border-t border-kin-champagne/30">
+                        <p class="font-serif text-base font-semibold text-kin-espresso">Clara Anindya</p>
+                        <p class="text-xs text-kin-softgray uppercase tracking-wider">Verified Buyer</p>
+                    </div>
+                </div>
+
+                <!-- Testi 2 -->
+                <div class="glass-panel p-8 rounded-2xl space-y-4">
+                    <div class="text-kin-gold text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sm text-kin-bronze font-light italic leading-relaxed">
+                        "Formulanya sangat terasa mewah namun ringan banget di kulit. Tekstur cream-nya lembut dan wanginya sangat menenangkan. Wajib punya!"
+                    </p>
+                    <div class="pt-4 border-t border-kin-champagne/30">
+                        <p class="font-serif text-base font-semibold text-kin-espresso">Siti Rahma</p>
+                        <p class="text-xs text-kin-softgray uppercase tracking-wider">Member KIN Club</p>
+                    </div>
+                </div>
+
+                <!-- Testi 3 -->
+                <div class="glass-panel p-8 rounded-2xl space-y-4">
+                    <div class="text-kin-gold text-sm">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sm text-kin-bronze font-light italic leading-relaxed">
+                        "Sunscreen terbaik yang pernah aku coba. Nggak bikin greasy dan langsung meresap sempurna. Cocok untuk kulit sensitifku."
+                    </p>
+                    <div class="pt-4 border-t border-kin-champagne/30">
+                        <p class="font-serif text-base font-semibold text-kin-espresso">Dina Prasetyo</p>
+                        <p class="text-xs text-kin-softgray uppercase tracking-wider">Verified Buyer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-kin-espresso text-kin-sand pt-16 pb-8 border-t border-kin-bronze">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10 mb-12">
+            
+            <!-- Brand Info -->
+            <div class="space-y-4">
+                <span class="font-serif text-3xl font-light tracking-[0.25em] text-kin-cream uppercase block">kin</span>
+                <p class="text-xs text-kin-nude/70 font-light leading-relaxed">
+                    Menghadirkan harmoni keindahan alami dan ilmu perawatan kulit modern. Mewah, aman, dan bersahabat.
+                </p>
+                <div class="flex space-x-4 text-kin-champagne pt-2">
+                    <a href="#" class="hover:text-kin-gold transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                    <a href="#" class="hover:text-kin-gold transition-colors"><i class="fa-brands fa-tiktok text-lg"></i></a>
+                    <a href="#" class="hover:text-kin-gold transition-colors"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                </div>
+            </div>
+
+            <!-- Tautan Cepat -->
+            <div>
+                <h5 class="font-serif text-lg text-kin-cream mb-4 font-normal">Navigasi</h5>
+                <ul class="space-y-2 text-xs text-kin-nude/70 font-light">
+                    <li><a href="#beranda" class="hover:text-kin-gold transition-colors">Beranda</a></li>
+                    <li><a href="#produk" class="hover:text-kin-gold transition-colors">Katalog Produk</a></li>
+                    <li><a href="#keunggulan" class="hover:text-kin-gold transition-colors">Keunggulan KIN</a></li>
+                    <li><a href="#testimoni" class="hover:text-kin-gold transition-colors">Testimoni Pelanggan</a></li>
+                </ul>
+            </div>
+
+            <!-- Bantuan / Syarat -->
+            <div>
+                <h5 class="font-serif text-lg text-kin-cream mb-4 font-normal">Bantuan & Layanan</h5>
+                <ul class="space-y-2 text-xs text-kin-nude/70 font-light">
+                    <li><a href="#" class="hover:text-kin-gold transition-colors">Panduan Memilih Skincare</a></li>
+                    <li><a href="#" class="hover:text-kin-gold transition-colors">Lacak Pengiriman</a></li>
+                    <li><a href="#" class="hover:text-kin-gold transition-colors">Kebijakan Privasi</a></li>
+                    <li><a href="#" class="hover:text-kin-gold transition-colors">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+
+            <!-- Kontak Info -->
+            <div class="space-y-3">
+                <h5 class="font-serif text-lg text-kin-cream mb-4 font-normal">Kontak Resmiki</h5>
+                <p class="text-xs text-kin-nude/70 font-light flex items-center gap-2">
+                    <i class="fa-regular fa-envelope text-kin-gold"></i>
+                    <a href="mailto:x@kin.skin" class="hover:text-kin-gold transition-colors font-medium">x@kin.skin</a>
+                </p>
+                <p class="text-xs text-kin-nude/70 font-light flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot text-kin-gold"></i>
+                    Jakarta, Indonesia
+                </p>
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <template x-for="product in extraProducts" :key="product.id">
-                <div class="bg-white p-5 rounded-xl border border-kin-soft/80 hover:border-kin-accent/50 transition-all flex items-center justify-between shadow-sm hover:shadow-md">
-                    <div class="pr-4">
-                        <span class="text-[10px] text-kin-accent font-bold tracking-widest uppercase block mb-0.5" x-text="product.category"></span>
-                        <h4 class="font-serif text-lg font-medium text-kin-dark" x-text="product.name"></h4>
-                        <p class="text-xs font-semibold text-kin-primary mt-1" x-text="formatRupiah(product.price)"></p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button @click="openSpecModal(product)" class="px-3.5 py-2 rounded-lg border border-kin-soft text-kin-dark text-xs font-medium hover:bg-kin-soft transition-colors whitespace-nowrap">
-                            Detail Spek
+        <div class="max-w-7xl mx-auto px-6 pt-6 border-t border-kin-bronze/50 text-center text-[11px] text-kin-nude/50 font-light uppercase tracking-widest">
+            &copy; 2026 KIN Skincare. All Rights Reserved.
+        </div>
+    </footer>
+
+
+    <!-- ================= LOGIN / REGISTER MODAL ================= -->
+    <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-kin-cream w-full max-w-md rounded-3xl p-8 relative shadow-2xl border border-kin-champagne/40 transform scale-95 transition-transform duration-300" id="modal-container">
+            
+            <!-- Close Button -->
+            <button onclick="closeLoginModal()" class="absolute top-6 right-6 text-kin-softgray hover:text-kin-espresso text-xl focus:outline-none">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="text-center mb-8">
+                <span class="font-serif text-3xl font-light tracking-[0.2em] text-kin-espresso uppercase block mb-1">kin</span>
+                <p id="modal-title" class="text-xs uppercase tracking-widest text-kin-gold font-semibold">Login Member KIN Club</p>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="form-login" class="space-y-4" onsubmit="handleLogin(event)">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-kin-bronze font-medium mb-1">Email / Username</label>
+                    <input type="email" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl bg-white border border-kin-nude text-sm text-kin-espresso focus:outline-none focus:border-kin-gold transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-kin-bronze font-medium mb-1">Password</label>
+                    <input type="password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-white border border-kin-nude text-sm text-kin-espresso focus:outline-none focus:border-kin-gold transition-colors">
+                </div>
+
+                <div class="flex items-center justify-between text-xs text-kin-softgray py-1">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" class="accent-kin-gold rounded">
+                        <span>Ingat Saya</span>
+                    </label>
+                    <a href="#" class="hover:text-kin-gold transition-colors">Lupa Password?</a>
+                </div>
+
+                <button type="submit" class="w-full gold-btn py-3.5 rounded-xl text-xs uppercase tracking-widest font-semibold mt-2">
+                    Masuk Akun
+                </button>
+
+                <p class="text-center text-xs text-kin-softgray pt-4">
+                    Belum menjadi member? 
+                    <button type="button" onclick="toggleFormState(true)" class="text-kin-gold font-semibold hover:underline">Daftar Sekarang</button>
+                </p>
+            </form>
+
+            <!-- REGISTER FORM (Hidden by default) -->
+            <form id="form-register" class="space-y-4 hidden" onsubmit="handleRegister(event)">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-kin-bronze font-medium mb-1">Nama Lengkap</label>
+                    <input type="text" required placeholder="Nama Anda" class="w-full px-4 py-3 rounded-xl bg-white border border-kin-nude text-sm text-kin-espresso focus:outline-none focus:border-kin-gold transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-kin-bronze font-medium mb-1">Email</label>
+                    <input type="email" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl bg-white border border-kin-nude text-sm text-kin-espresso focus:outline-none focus:border-kin-gold transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-kin-bronze font-medium mb-1">Password</label>
+                    <input type="password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-white border border-kin-nude text-sm text-kin-espresso focus:outline-none focus:border-kin-gold transition-colors">
+                </div>
+
+                <div class="text-[11px] text-kin-softgray py-1">
+                    Dengan mendaftar, Anda menyetujui <a href="#" class="text-kin-gold underline">Syarat & Ketentuan</a> KIN Club.
+                </div>
+
+                <button type="submit" class="w-full gold-btn py-3.5 rounded-xl text-xs uppercase tracking-widest font-semibold mt-2">
+                    Buat Akun Member
+                </button>
+
+                <p class="text-center text-xs text-kin-softgray pt-4">
+                    Sudah punya akun? 
+                    <button type="button" onclick="toggleFormState(false)" class="text-kin-gold font-semibold hover:underline">Login di sini</button>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- ================= CART SIDE DRAWER ================= -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+        <!-- Backdrop -->
+        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
+        
+        <!-- Content Panel -->
+        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-kin-cream shadow-2xl flex flex-col justify-between p-6 overflow-y-auto">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-kin-nude">
+                    <h3 class="font-serif text-2xl font-medium text-kin-espresso">Keranjang Belanja</h3>
+                    <button onclick="toggleCartDrawer()" class="text-kin-softgray hover:text-kin-espresso text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items Container -->
+                <div id="cart-items-list" class="py-6 space-y-4">
+                    <!-- Dynamic Cart Items inserted via JS -->
+                    <p id="empty-cart-msg" class="text-center text-sm text-kin-softgray py-8">Keranjang belanja Anda masih kosong.</p>
+                </div>
+            </div>
+
+            <!-- Cart Footer Summary -->
+            <div class="pt-4 border-t border-kin-nude space-y-4">
+                <div class="flex justify-between text-sm font-semibold text-kin-espresso">
+                    <span>Total Pembayaran</span>
+                    <span id="cart-total-price">Rp 0</span>
+                </div>
+                <button onclick="checkout()" class="w-full gold-btn py-4 rounded-xl text-xs uppercase tracking-widest font-semibold">
+                    Lanjutkan ke Pembayaran
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-kin-espresso text-kin-cream px-6 py-3 rounded-xl shadow-xl text-xs uppercase tracking-wider flex items-center gap-3 border border-kin-gold/40 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-check text-kin-gold"></i>
+        <span id="toast-message">Produk ditambahkan ke keranjang</span>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        // State Management
+        let cart = [];
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Modal Functions
+        const loginModal = document.getElementById('login-modal');
+        const modalContainer = document.getElementById('modal-container');
+        const formLogin = document.getElementById('form-login');
+        const formRegister = document.getElementById('form-register');
+        const modalTitle = document.getElementById('modal-title');
+
+        function openLoginModal(isRegister = false) {
+            loginModal.classList.remove('hidden');
+            setTimeout(() => {
+                loginModal.classList.remove('opacity-0');
+                modalContainer.classList.remove('scale-95');
+                modalContainer.classList.add('scale-100');
+            }, 10);
+            toggleFormState(isRegister);
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.add('opacity-0');
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+            setTimeout(() => {
+                loginModal.classList.add('hidden');
+            }, 300);
+        }
+
+        function toggleFormState(showRegister) {
+            if (showRegister) {
+                formLogin.classList.add('hidden');
+                formRegister.classList.remove('hidden');
+                modalTitle.textContent = "Daftar Member KIN Club";
+            } else {
+                formRegister.classList.add('hidden');
+                formLogin.classList.remove('hidden');
+                modalTitle.textContent = "Login Member KIN Club";
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            showToast("Berhasil login ke akun Member KIN");
+            closeLoginModal();
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            showToast("Selamat! Pendaftaran member KIN berhasil");
+            closeLoginModal();
+        }
+
+        // Cart Functions
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function addToCart(title, price, image) {
+            const existingItem = cart.find(item => item.title === title);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ title, price, image, qty: 1 });
+            }
+            updateCartUI();
+            showToast(`${title} ditambahkan ke keranjang`);
+        }
+
+        function updateCartUI() {
+            const counter = document.getElementById('cart-counter');
+            const cartList = document.getElementById('cart-items-list');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const totalPriceEl = document.getElementById('cart-total-price');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            counter.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p class="text-center text-sm text-kin-softgray py-8">Keranjang belanja Anda masih kosong.</p>';
+                totalPriceEl.textContent = 'Rp 0';
+                return;
+            }
+
+            let cartHTML = '';
+            let totalCost = 0;
+
+            cart.forEach((item, index) => {
+                totalCost += item.price * item.qty;
+                cartHTML += `
+                    <div class="flex items-center justify-between gap-4 p-3 rounded-xl bg-white/60 border border-kin-nude/50">
+                        <img src="${item.image}" alt="${item.title}" class="w-14 h-14 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h5 class="text-xs font-semibold text-kin-espresso">${item.title}</h5>
+                            <p class="text-xs text-kin-gold font-medium">Rp ${item.price.toLocaleString('id-ID')}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <button onclick="changeQty(${index}, -1)" class="w-5 h-5 rounded bg-kin-sand text-xs text-kin-espresso flex items-center justify-center">-</button>
+                                <span class="text-xs font-medium">${item.qty}</span>
+                                <button onclick="changeQty(${index}, 1)" class="w-5 h-5 rounded bg-kin-sand text-xs text-kin-espresso flex items-center justify-center">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeItem(${index})" class="text-kin-softgray hover:text-red-500 text-xs p-1">
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
-                        <button @click="addToCart(product)" class="p-2 bg-kin-dark text-white rounded-lg hover:bg-kin-accent transition-colors" title="Tambah ke keranjang">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 2
+                    </div>
+                `;
+            });
+
+            cartList.innerHTML = cartHTML;
+            totalPriceEl.textContent = `Rp ${totalCost.toLocaleString('id-ID')}`;
+        }
+
+        function changeQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showToast("Keranjang Anda masih kosong!");
+                return;
+            }
+            alert("Terima kasih! Pesanan Anda sedang diproses. Silahkan hubungi support x@kin.skin jika ada kendala.");
+            cart = [];
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        // Toast Feedback
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+```
