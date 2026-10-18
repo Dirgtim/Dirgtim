@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIN — Timeless Beauty</title>
-    <!-- 1. Tailwind CSS untuk Tampilan Elegan & Modern -->
+    <title>KiN — Timeless Beauty & Skin Alchemy</title>
+    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 2. Alpine.js untuk Fitur Interaktif Ringan -->
+    <!-- Alpine.js via CDN -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Font Google Premium -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -21,7 +22,8 @@
                             primary: '#8C6D58',
                             dark: '#2C221E',
                             accent: '#D4A373',
-                            soft: '#F3E9E2'
+                            soft: '#F3E9E2',
+                            gold: '#C5A059'
                         }
                     },
                     fontFamily: {
@@ -32,145 +34,49 @@
             }
         }
     </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FAF7F5; }
+        ::-webkit-scrollbar-thumb { background: #D4A373; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-kin-bg text-kin-dark font-sans antialiased selection:bg-kin-accent selection:text-white" x-data="{ isLoginOpen: false, cartCount: 0 }">
+<body class="bg-kin-bg text-kin-dark font-sans antialiased selection:bg-kin-accent selection:text-white" 
+      x-data="kinStore()">
 
     <!-- Header Navigation -->
-    <nav class="sticky top-0 z-40 bg-kin-bg/80 backdrop-blur-md border-b border-kin-soft/60">
+    <nav class="sticky top-0 z-40 bg-kin-bg/90 backdrop-blur-md border-b border-kin-soft/80 transition-all">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-3xl font-serif font-bold tracking-widest text-kin-dark">KIN<span class="text-kin-accent">.</span></a>
+            <a href="#" class="text-3xl font-serif font-bold tracking-widest text-kin-dark">KiN<span class="text-kin-accent">.</span></a>
             
             <div class="hidden md:flex items-center space-x-8 text-sm tracking-wide font-medium">
-                <a href="#produk" class="hover:text-kin-accent transition-colors">Koleksi</a>
-                <a href="#tentang" class="hover:text-kin-accent transition-colors">Filosofi</a>
+                <a href="#ungulan" class="hover:text-kin-accent transition-colors">Produk Laris</a>
+                <a href="#koleksi" class="hover:text-kin-accent transition-colors">Koleksi Lengkap</a>
                 <a href="#kontak" class="hover:text-kin-accent transition-colors">Kontak</a>
             </div>
 
             <div class="flex items-center space-x-5">
                 <!-- Tombol Login Member -->
-                <button @click="isLoginOpen = true" class="text-sm font-medium hover:text-kin-accent transition-colors flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    <span>Member</span>
+                <button @click="isLoginOpen = true" class="text-sm font-medium hover:text-kin-accent transition-colors flex items-center gap-2 bg-kin-soft/50 px-4 py-2 rounded-full border border-kin-soft">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span>Member KiN</span>
                 </button>
 
-                <!-- Keranjang Belanja -->
-                <div class="relative">
-                    <button class="p-2 text-kin-dark hover:text-kin-accent transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                        <span x-show="cartCount > 0" x-text="cartCount" class="absolute -top-1 -right-1 bg-kin-accent text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-                    </button>
-                </div>
+                <!-- Tombol Keranjang Belanja -->
+                <button @click="isCartOpen = true" class="relative p-2.5 bg-kin-dark text-white rounded-full hover:bg-kin-primary transition-colors shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    <span x-show="totalCartCount > 0" x-text="totalCartCount" class="absolute -top-1 -right-1 bg-kin-accent text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-white"></span>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="max-w-7xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center">
+    <section class="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
         <div>
             <span class="text-xs uppercase tracking-[0.3em] font-semibold text-kin-accent block mb-4">Kemewahan Alami Alkimia Kulit</span>
-            <h1 class="text-4xl md:text-6xl font-serif font-normal leading-tight mb-6">Pancarkan Pesona Kulit Sehat & Abadi.</h1>
-            <p class="text-kin-dark/70 font-light mb-8 max-w-md leading-relaxed">Formulasi dermatologi kelas dunia yang dipadukan dengan ekstrak botanical langka untuk menghidrasi serta meremajakan kulit Anda.</p>
-            <a href="#produk" class="inline-block bg-kin-dark text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-kin-primary transition-all duration-300 shadow-lg hover:shadow-xl">Jelajahi Produk Laris</a>
-        </div>
-        <div class="relative">
-            <div class="w-full h-[450px] bg-kin-soft rounded-3xl overflow-hidden shadow-2xl relative">
-                <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80" alt="Kin Beauty Products" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
-            </div>
-        </div>
-    </section>
-
-    <!-- Catalog Produk -->
-    <section id="produk" class="max-w-7xl mx-auto px-6 py-20 border-t border-kin-soft">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-serif font-normal mb-4">Produk Unggulan KIN</h2>
-            <p class="text-kin-dark/60 text-sm max-w-lg mx-auto">Dirancang secara eksklusif untuk memberikan hasil nyata dan pengalaman perawatan diri yang menenangkan.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Card Produk 1 -->
-            <div class="bg-kin-card p-6 rounded-2xl shadow-sm border border-kin-soft/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-                <div>
-                    <div class="h-64 rounded-xl overflow-hidden mb-6 bg-kin-bg">
-                        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
-                    </div>
-                    <span class="text-[10px] uppercase tracking-widest font-bold bg-kin-soft px-3 py-1 rounded-full text-kin-primary">Best Seller</span>
-                    <h3 class="font-serif text-xl font-medium mt-3 mb-1">KIN Radiant Glow Serum</h3>
-                    <p class="text-xs text-kin-dark/60 mb-4">Mencerahkan dan menyamarkan noda hitam dalam 14 hari.</p>
-                </div>
-                <div class="flex items-center justify-between pt-4 border-t border-kin-soft">
-                    <span class="font-semibold text-lg">Rp 349.000</span>
-                    <button @click="cartCount++" class="bg-kin-dark text-white px-5 py-2.5 rounded-full text-xs hover:bg-kin-accent transition-colors">Tambah</button>
-                </div>
-            </div>
-
-            <!-- Card Produk 2 -->
-            <div class="bg-kin-card p-6 rounded-2xl shadow-sm border border-kin-soft/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-                <div>
-                    <div class="h-64 rounded-xl overflow-hidden mb-6 bg-kin-bg">
-                        <img src="https://images.unsplash.com/photo-1608248597309-a1b7305d2141?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
-                    </div>
-                    <span class="text-[10px] uppercase tracking-widest font-bold bg-kin-soft px-3 py-1 rounded-full text-kin-primary">Favorit</span>
-                    <h3 class="font-serif text-xl font-medium mt-3 mb-1">KIN Velvet Essence Cream</h3>
-                    <p class="text-xs text-kin-dark/60 mb-4">Melembabkan secara mendalam tanpa rasa lengket.</p>
-                </div>
-                <div class="flex items-center justify-between pt-4 border-t border-kin-soft">
-                    <span class="font-semibold text-lg">Rp 289.000</span>
-                    <button @click="cartCount++" class="bg-kin-dark text-white px-5 py-2.5 rounded-full text-xs hover:bg-kin-accent transition-colors">Tambah</button>
-                </div>
-            </div>
-
-            <!-- Card Produk 3 -->
-            <div class="bg-kin-card p-6 rounded-2xl shadow-sm border border-kin-soft/60 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-                <div>
-                    <div class="h-64 rounded-xl overflow-hidden mb-6 bg-kin-bg">
-                        <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
-                    </div>
-                    <span class="text-[10px] uppercase tracking-widest font-bold bg-kin-soft px-3 py-1 rounded-full text-kin-primary">Baru</span>
-                    <h3 class="font-serif text-xl font-medium mt-3 mb-1">KIN Gentle Cleansing Oil</h3>
-                    <p class="text-xs text-kin-dark/60 mb-4">Membersihkan riasan dan kotoran dengan lembut.</p>
-                </div>
-                <div class="flex items-center justify-between pt-4 border-t border-kin-soft">
-                    <span class="font-semibold text-lg">Rp 219.000</span>
-                    <button @click="cartCount++" class="bg-kin-dark text-white px-5 py-2.5 rounded-full text-xs hover:bg-kin-accent transition-colors">Tambah</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer & Kontak Email -->
-    <footer id="kontak" class="bg-kin-dark text-white/80 py-12">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-                <h3 class="font-serif text-2xl text-white font-bold">KIN.</h3>
-                <p class="text-xs text-white/50 mt-1">Sederhana, Efektif, Berkelas.</p>
-            </div>
-            <div class="text-center md:text-right text-sm">
-                <p class="text-white/60 mb-1">Layanan Pelanggan & Kerjasama:</p>
-                <a href="mailto:x@kin.skin" class="text-kin-accent hover:underline font-medium text-base">x@kin.skin</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal Login Member (Pop-up) -->
-    <div x-show="isLoginOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" x-cloak>
-        <div @click.away="isLoginOpen = false" class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative">
-            <button @click="isLoginOpen = false" class="absolute top-6 right-6 text-gray-400 hover:text-black">✕</button>
-            <h3 class="font-serif text-2xl text-center mb-2">Member KIN Club</h3>
-            <p class="text-xs text-center text-gray-500 mb-6">Masuk untuk mendapatkan poin eksklusif & penawaran rahasia.</p>
-            
-            <form class="space-y-4" @submit.prevent="alert('Login berhasil!'); isLoginOpen = false">
-                <div>
-                    <label class="text-xs font-semibold uppercase tracking-wider block mb-1 text-gray-600">Email</label>
-                    <input type="email" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-kin-accent">
-                </div>
-                <div>
-                    <label class="text-xs font-semibold uppercase tracking-wider block mb-1 text-gray-600">Kata Sandi</label>
-                    <input type="password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-kin-accent">
-                </div>
-                <button type="submit" class="w-full bg-kin-dark text-white py-3.5 rounded-xl text-sm font-medium hover:bg-kin-primary transition-colors">Masuk Sekarang</button>
-            </form>
-        </div>
-    </div>
-
-</body>
-</html>
+            <h1 class="text-4xl md:text-6xl font-serif font-normal leading-tight mb-6">Pancarkan Pesona Kulit Abadi bersama <span class="italic font-serif text-kin-accent">KiN</span>.</h1>
+            <p class="text-kin-dark/70 font-light mb-8 max-w-md leading-relaxed text-sm md:text-base">Formulasi dermatologi kelas dunia dipadukan dengan ekstrak botanical langka untuk menghidrasi, mencerahkan, serta meremajakan kulit Anda secara alami.</p>
+            <div class="flex items-center gap-4">
+                <a href="#ungulan" class="bg-kin-dark text-white px-8 py-4 rounded-full text-sm font-medium hover:bg-kin-primary transition-all duration-300 shadow-lg hover:shadow-xl">Lihat Produk Laris</a>
+                <a href="#koleksi" class="border border-kin-dark/20 text-kin-dark px-6 py-4 rounded-full text-sm font-medium hover:bg-kin-
